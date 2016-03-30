@@ -1,0 +1,19 @@
+
+#toDoListStyle {
+    padding: 3%;
+    padding-top: 1%;
+    border: black 1px solid;
+    width: 23%;
+    height: 25%;
+    background-color: lightblue;
+}
+
+#displayList li {
+    border-bottom: 1 px dashed grey;
+}
+
+#displayList li:hover {
+  color: red;
+  font-size: 110%;
+  cursor: pointer;
+}
