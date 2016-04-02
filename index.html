@@ -2,28 +2,50 @@
 <html>
   <head>
     <title>Simple Dart App</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <!--  <link href="css/bootstrap.min.css" rel="stylesheet"> -->
   </head>
   <body>
-    <h1>Hello, Dart!</h1>
+  <div class="container-fluid">
+<div class="row">
+  <div class="col-xs-12">
+    <h1 class="text-center">Productivity App</h1>
     <p id="chgText">Lets try to create the web. </p>
-<br> <br>
+  </div>
+</div>
 
+<div class="row">
+  <div class="col-sm-7">
+    Calendar
+  </div>
+  <div class="col-sm-5">
     <div id="toDoListStyle">
     <h3>ToDo List</h3>
 
     <input id="addItem" type="text" placeholder="Add item to list <ENTER>"> </input>
-          <button type="button" id="clearList" style="float:right">Delete All</button>
+    <button type="button" class="btn btn-warning" id="clearList" style="float:right">Delete All</button>
+    <button type="button" class="btn btn-default" id="addItem" style="float:right">Add</button>
+
     <div>
       <ul id="displayList">
 
       </ul>
     </div>
-</div>
+
+    </div>
+  </div>
+  </div>
+
+
+  </div>
 
     <script type="application/dart" src="mainDart.dart"></script>
     <script src="packages/browser/dart.js"></script>
+
   </body>
 </html>
 

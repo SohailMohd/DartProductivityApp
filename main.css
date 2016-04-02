@@ -3,7 +3,7 @@
     padding: 3%;
     padding-top: 1%;
     border: black 1px solid;
-    width: 27%;
+    width: 75%;
     height: 25%;
     background-color: lightblue;
 }
@@ -16,4 +16,9 @@
   color: red;
   font-size: 110%;
   cursor: pointer;
+}
+
+#addItem {
+  margin-left: 0%;
+  margin-right: 2%;
 }
