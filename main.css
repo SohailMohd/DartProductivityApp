@@ -9,7 +9,9 @@
 }
 
 #displayList li {
-    border-bottom: 1 px dashed grey;
+    border-bottom: 3px solid grey;
+    width: 43%;
+    margin-top: 2%;
 }
 
 #displayList li:hover {

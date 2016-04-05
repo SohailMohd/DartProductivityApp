@@ -1,0 +1,4 @@
+This is an introduction to Dart.
+Some notes to keep in mind. Dart
+is way better than JavaScript.
+Enjoy!
