@@ -8,6 +8,12 @@
     background-color: lightblue;
 }
 
+#imageBox {
+  width: 63%;
+  height: 47%;
+  border: 2px solid black;
+}
+
 #displayList li {
     border-bottom: 3px solid grey;
     width: 43%;

@@ -1,6 +1,8 @@
 import 'dart:html';
 import 'dart:convert';
 //import 'dart:io';
+//import 'package:polymer_elements/paper_button.dart';
+//import 'package:polymer/polymer.dart';
 
 InputElement toDoInput;
 UListElement outputList;
@@ -18,6 +20,10 @@ void main() {
 
   querySelector('#displayNotes').text = readContents;
   //checkNotes = querySelector('#displayNotes');
+  for (int i = 0; i < 3; i++){
+    querySelector('#img'+i).style.display = 'none';
+  }
+
 
 }
 
