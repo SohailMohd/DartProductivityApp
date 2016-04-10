@@ -1,0 +1,5 @@
+name: my_app
+dependencies:
+  js: ^0.3.0
+  intl: ^0.12.4
+  slideshow: "^0.1.2"

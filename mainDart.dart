@@ -1,5 +1,9 @@
 import 'dart:html';
 import 'dart:convert';
+//import 'package:js/js.dart' as js;
+import 'package:intl/intl.dart';
+import 'package:slideshow/slideshow.dart';
+import 'package:slideshow/transition_simple.dart';
 //import 'dart:io';
 //import 'package:polymer_elements/paper_button.dart';
 //import 'package:polymer/polymer.dart';
@@ -20,9 +24,7 @@ void main() {
 
   querySelector('#displayNotes').text = readContents;
   //checkNotes = querySelector('#displayNotes');
-  for (int i = 0; i < 3; i++){
-    querySelector('#img'+i).style.display = 'none';
-  }
+
 
 
 }
@@ -36,7 +38,9 @@ void toDoItemsList(Event e){
 
 }
 
-
+final Slideshow test = new Slideshow(
+      document.body.querySelector("#notesImgsBox"),
+      new TransitionSimple());
 
 /*
 void makeRequest(Event e) {
