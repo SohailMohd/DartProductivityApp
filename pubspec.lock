@@ -25,12 +25,36 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.9.0"
+  barback:
+    description:
+      name: barback
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.15.2+7"
+  browser:
+    description:
+      name: browser
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.10.0+2"
   charcode:
     description:
       name: charcode
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  cli_util:
+    description:
+      name: cli_util
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1+2"
+  code_transformers:
+    description:
+      name: code_transformers
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.2+1"
   collection:
     description:
       name: collection
@@ -43,6 +67,12 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.2"
+  dart_style:
+    description:
+      name: dart_style
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.4"
   glob:
     description:
       name: glob
@@ -55,6 +85,12 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.2+1"
+  initialize:
+    description:
+      name: initialize
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.2+2"
   intl:
     description:
       name: intl
@@ -79,6 +115,12 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.6"
+  observe:
+    description:
+      name: observe
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.13.3+1"
   package_config:
     description:
       name: package_config
@@ -103,24 +145,72 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.0"
+  polymer:
+    description:
+      name: polymer
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.16.4+2"
+  polymer_expressions:
+    description:
+      name: polymer_expressions
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.13.1"
+  polymer_interop:
+    description:
+      name: polymer_interop
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.2+1"
+  pool:
+    description:
+      name: pool
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.3"
   slideshow:
     description:
       name: slideshow
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2"
+  smoke:
+    description:
+      name: smoke
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.6+2"
+  source_maps:
+    description:
+      name: source_maps
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.10.1+1"
   source_span:
     description:
       name: source_span
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.2"
+  stack_trace:
+    description:
+      name: stack_trace
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.6.5"
   string_scanner:
     description:
       name: string_scanner
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.4+1"
+  template_binding:
+    description:
+      name: template_binding
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.14.0+4"
   utf:
     description:
       name: utf
@@ -133,10 +223,28 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.7"
+  web_components:
+    description:
+      name: web_components
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.12.3"
+  when:
+    description:
+      name: when
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0"
+  which:
+    description:
+      name: which
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.3"
   yaml:
     description:
       name: yaml
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.8"
-sdk: ">=1.12.0 <2.0.0"
+sdk: ">=1.14.0 <2.0.0"

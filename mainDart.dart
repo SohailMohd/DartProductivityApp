@@ -4,9 +4,12 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:slideshow/slideshow.dart';
 import 'package:slideshow/transition_simple.dart';
+import 'package:polymer/polymer.dart';
 //import 'dart:io';
 //import 'package:polymer_elements/paper_button.dart';
 //import 'package:polymer/polymer.dart';
+
+
 
 InputElement toDoInput;
 UListElement outputList;
@@ -15,16 +18,26 @@ var checkNotes;
 
 void main() {
   querySelector('#chgText').text = 'Lets Program in Dart!';
+
   toDoInput = querySelector('#addItem');
   outputList = querySelector('#displayList');
   toDoInput.onChange.listen(toDoItemsList);
   clearAll = querySelector('#clearList');
   clearAll.onClick.listen((e) => outputList.children.clear());
-  var readContents = new File('Notes.txt').readAsStringnSync();
 
-  querySelector('#displayNotes').text = readContents;
+  final Slideshow test = new Slideshow(
+        document.body.querySelector("#notesImgsBox"),
+        new TransitionSimple());
+  test();
+  //var readContents = new File('Notes.txt').readAsStringnSync();
+  //querySelector('#displayNotes').text = readContents;
   //checkNotes = querySelector('#displayNotes');
 
+  initPolymer().run(() {
+    // The rest of the code in the main method.
+
+
+    });
 
 
 }
@@ -38,9 +51,8 @@ void toDoItemsList(Event e){
 
 }
 
-final Slideshow test = new Slideshow(
-      document.body.querySelector("#notesImgsBox"),
-      new TransitionSimple());
+
+
 
 /*
 void makeRequest(Event e) {
