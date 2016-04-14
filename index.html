@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" type="text/css" href="main.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
     <link rel="import" href="packages/paper_elements/paper_input.html">
   <!--  <link href="css/bootstrap.min.css" rel="stylesheet"> -->
   <script defer src="packages/web_components/webcomponents-lite.js"></script>
@@ -24,12 +25,14 @@
 
 <div class="row">
   <div class="col-sm-7">
+    <div id="searchMaps"> </div>
+
 <!--    <button type="button" class="btn btn-info" id="jsonNotes">Check Notes</button>
     <ul id='displayNotes'>
-
-    </ul>  -->
     <paper-input label="Type something...">Hello WOrld</paper-input>
-    <div id="notesImgsBox" class="slideshow">
+    </ul>  -->
+
+  <!--  <div id="notesImgsBox" class="slideshow">
       <div class="slides">
         <ul>
           <li class="active">
@@ -59,7 +62,7 @@
     <input id="addItem" type="text" placeholder="Add item to list <ENTER>"> </input>
     <button type="button" class="btn btn-warning" id="clearList" style="float:right">Delete All</button>
     <button type="button" class="btn btn-default" id="addItem" style="float:right">Add</button>
-
+-->
     <div>
       <ul id="displayList">
 
@@ -75,7 +78,7 @@
 
     <script type="application/dart" src="mainDart.dart"></script>
     <script src="packages/browser/dart.js"></script>
-
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmT_77rmDhAKUh9T59jz5mGTkTC8m6cB4"></script>
   </body>
 </html>
 

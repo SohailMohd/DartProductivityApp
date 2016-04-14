@@ -4,7 +4,9 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:slideshow/slideshow.dart';
 import 'package:slideshow/transition_simple.dart';
+import 'package:js/js.dart' as js;
 import 'package:polymer/polymer.dart';
+import 'package:google_maps/google_maps.dart';
 //import 'dart:io';
 //import 'package:polymer_elements/paper_button.dart';
 //import 'package:polymer/polymer.dart';
@@ -26,18 +28,20 @@ void main() {
   clearAll.onClick.listen((e) => outputList.children.clear());
 
   final Slideshow test = new Slideshow(
-        document.body.querySelector("#notesImgsBox"),
+        querySelector("#notesImgsBox"),
         new TransitionSimple());
-  test();
+
+  final mapOptions = new MapOptions()
+      ..zoom = 8
+      ..center = new LatLng(-34.397, 158.644)
+      ..mapTypeId = MapTypeId.ROADMAP
+      ;
+    final map = new GMap(query('#search-gMaps'), mapOptions);
+    js.retain(map); 
+
   //var readContents = new File('Notes.txt').readAsStringnSync();
   //querySelector('#displayNotes').text = readContents;
   //checkNotes = querySelector('#displayNotes');
-
-  initPolymer().run(() {
-    // The rest of the code in the main method.
-
-
-    });
 
 
 }
