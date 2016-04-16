@@ -3,13 +3,9 @@ import 'dart:convert';
 //import 'package:js/js.dart' as js;
 import 'package:intl/intl.dart';
 import 'package:slideshow/slideshow.dart';
-import 'package:slideshow/transition_simple.dart';
-import 'package:js/js.dart' as js;
+import 'package:slideshow/transition_.dart';
 import 'package:polymer/polymer.dart';
-import 'package:google_maps/google_maps.dart';
-//import 'dart:io';
-//import 'package:polymer_elements/paper_button.dart';
-//import 'package:polymer/polymer.dart';
+import 'package:paper_elements/paper_input.dart';
 
 
 
@@ -28,17 +24,12 @@ void main() {
   clearAll.onClick.listen((e) => outputList.children.clear());
 
   final Slideshow test = new Slideshow(
-        querySelector("#notesImgsBox"),
-        new TransitionSimple());
+        document.body.querySelector("#notesImgsBox"),
+        new Transition());
 
-  final mapOptions = new MapOptions()
-      ..zoom = 8
-      ..center = new LatLng(-34.397, 158.644)
-      ..mapTypeId = MapTypeId.ROADMAP
-      ;
-    final map = new GMap(query('#search-gMaps'), mapOptions);
-    js.retain(map); 
-
+  for (Element e in querySelectorAll('a')) {
+    e.onClick.listen((e) => handleClick(e.target));
+  }
   //var readContents = new File('Notes.txt').readAsStringnSync();
   //querySelector('#displayNotes').text = readContents;
   //checkNotes = querySelector('#displayNotes');

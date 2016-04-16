@@ -4,16 +4,12 @@
 
 library dart_style.src.dart_formatter;
 
-import 'dart:math' as math;
-
-import 'package:analyzer/analyzer.dart';
+import 'package:analyzer/src/string_source.dart';
 import 'package:analyzer/src/generated/parser.dart';
 import 'package:analyzer/src/generated/scanner.dart';
 import 'package:analyzer/src/generated/source.dart';
-import 'package:analyzer/src/string_source.dart';
 
 import 'error_listener.dart';
-import 'formatter_exception.dart';
 import 'source_code.dart';
 import 'source_visitor.dart';
 
@@ -29,7 +25,7 @@ class DartFormatter {
   /// The number of characters allowed in a single line.
   final int pageWidth;
 
-  /// The number of characters of indentation to prefix the output lines with.
+  /// The number of levels of indentation to prefix the output lines with.
   final int indent;
 
   /// Creates a new formatter for Dart code.
@@ -60,8 +56,7 @@ class DartFormatter {
     }
 
     return formatSource(
-            new SourceCode(source, uri: uri, isCompilationUnit: true))
-        .text;
+        new SourceCode(source, uri: uri, isCompilationUnit: true)).text;
   }
 
   /// Formats the given [source] string containing a single Dart statement.
@@ -100,27 +95,14 @@ class DartFormatter {
 
     // Parse it.
     var parser = new Parser(stringSource, errorListener);
-
-    parser.parseConditionalDirectives = true;
+    parser.parseAsync = true;
+    parser.parseEnum = true;
 
     var node;
     if (source.isCompilationUnit) {
       node = parser.parseCompilationUnit(startToken);
     } else {
       node = parser.parseStatement(startToken);
-
-      // Make sure we consumed all of the source.
-      var token = node.endToken.next;
-      if (token.type != TokenType.EOF) {
-        var error = new AnalysisError(
-            stringSource,
-            token.offset,
-            math.max(token.length, 1),
-            ParserErrorCode.UNEXPECTED_TOKEN,
-            [token.lexeme]);
-
-        throw new FormatterException([error]);
-      }
     }
 
     errorListener.throwIfErrors();

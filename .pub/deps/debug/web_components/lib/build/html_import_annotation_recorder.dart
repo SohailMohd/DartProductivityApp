@@ -3,7 +3,10 @@
 // BSD-style license that can be found in the LICENSE file.
 library web_components.build.html_import_recorder_inliner;
 
+import 'package:analyzer/analyzer.dart';
+import 'package:analyzer/src/generated/ast.dart';
 import 'package:analyzer/src/generated/element.dart';
+import 'package:barback/barback.dart';
 import 'package:initialize/transformer.dart';
 import 'package:path/path.dart' as path;
 import '../src/normalize_path.dart';
@@ -18,6 +21,8 @@ class HtmlImportAnnotationRecorder implements InitializerPlugin {
   /// All the normalized import paths that were seen.
   final Set<String> importPaths = new Set<String>();
 
+  TransformLogger _logger;
+
   HtmlImportAnnotationRecorder();
 
   /// Applies to anything named `HtmlImport` which annotates a library.
@@ -30,11 +35,8 @@ class HtmlImportAnnotationRecorder implements InitializerPlugin {
     } else if (annotationElement is PropertyAccessorElement) {
       type = annotationElement.variable.propagatedType;
       if (type == null) {
-        type = pluginData.resolver
-            .evaluateConstant(annotationElement.library,
-                pluginData.initializer.annotationNode.name)
-            .value
-            .type;
+        type = pluginData.resolver.evaluateConstant(annotationElement.library,
+            pluginData.initializer.annotationNode.name).value.type;
       }
     } else {
       logger.error('Unsupported annotation type. Only constructors and '
@@ -58,21 +60,18 @@ class HtmlImportAnnotationRecorder implements InitializerPlugin {
     var annotationElement = pluginData.initializer.annotationElement;
     var element = pluginData.initializer.targetElement as LibraryElement;
     var resolver = pluginData.resolver;
+    var libraryDirective =
+        pluginData.initializer.targetNode.parent.parent as LibraryDirective;
 
     var originalImportPath;
     if (annotationElement.element is PropertyAccessorElement) {
-      originalImportPath = resolver
-          .evaluateConstant(element.library, annotation.name)
-          .value
-          .fields['filePath']
-          .toStringValue();
+      originalImportPath = resolver.evaluateConstant(
+              element.library, annotation.name).value.fields[
+          'filePath'].stringValue;
     } else {
       assert(annotationElement.element is ConstructorElement);
-      originalImportPath = resolver
-          .evaluateConstant(
-              element.library, annotation.arguments.arguments.first)
-          .value
-          .toStringValue();
+      originalImportPath = resolver.evaluateConstant(element.library,
+          annotation.arguments.arguments.first).value.stringValue;
     }
 
     var libPath;

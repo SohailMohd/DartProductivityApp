@@ -50,9 +50,7 @@ class SourceCode {
   }
 
   SourceCode(this.text,
-      {this.uri,
-      this.isCompilationUnit: true,
-      this.selectionStart,
+      {this.uri, this.isCompilationUnit: true, this.selectionStart,
       this.selectionLength}) {
     // Must either provide both selection bounds or neither.
     if ((selectionStart == null) != (selectionLength == null)) {

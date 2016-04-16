@@ -8,6 +8,16 @@
     background-color: lightblue;
 }
 
+#search-gMaps {
+  height: 50%;
+  width: 50%;
+
+}
+
+.pagination {
+  margin-bottom: 1%;
+}
+
 #imageBox {
   width: 63%;
   height: 47%;

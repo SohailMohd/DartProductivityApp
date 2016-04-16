@@ -17,8 +17,7 @@ import 'src/common.dart' show compareLists;
 /// Set up the smoke package to use a static implementation based on the given
 /// [configuration].
 useGeneratedCode(StaticConfiguration configuration) {
-  configure(
-      new _DebugObjectAccessorService(configuration),
+  configure(new _DebugObjectAccessorService(configuration),
       new _DebugTypeInspectorService(configuration),
       new _DebugSymbolConverterService(configuration));
 }
@@ -32,8 +31,10 @@ class _DebugObjectAccessorService implements ObjectAccessorService {
       : _static = new GeneratedObjectAccessorService(configuration),
         _mirrors = new ReflectiveObjectAccessorService();
 
-  read(Object object, Symbol name) => _check('read', [object, name],
-      _static.read(object, name), _mirrors.read(object, name));
+  read(Object object, Symbol name) => _check('read', [
+    object,
+    name
+  ], _static.read(object, name), _mirrors.read(object, name));
 
   // Note: we can't verify operations with side-effects like write or invoke.
   void write(Object object, Symbol name, value) =>
@@ -52,41 +53,41 @@ class _DebugTypeInspectorService implements TypeInspectorService {
       : _static = new GeneratedTypeInspectorService(configuration),
         _mirrors = new ReflectiveTypeInspectorService();
 
-  bool isSubclassOf(Type type, Type supertype) => _check(
-      'isSubclassOf',
-      [type, supertype],
-      _static.isSubclassOf(type, supertype),
+  bool isSubclassOf(Type type, Type supertype) => _check('isSubclassOf', [
+    type,
+    supertype
+  ], _static.isSubclassOf(type, supertype),
       _mirrors.isSubclassOf(type, supertype));
 
-  bool hasGetter(Type type, Symbol name) => _check('hasGetter', [type, name],
-      _static.hasGetter(type, name), _mirrors.hasGetter(type, name));
+  bool hasGetter(Type type, Symbol name) => _check('hasGetter', [
+    type,
+    name
+  ], _static.hasGetter(type, name), _mirrors.hasGetter(type, name));
 
-  bool hasSetter(Type type, Symbol name) => _check('hasSetter', [type, name],
-      _static.hasSetter(type, name), _mirrors.hasSetter(type, name));
+  bool hasSetter(Type type, Symbol name) => _check('hasSetter', [
+    type,
+    name
+  ], _static.hasSetter(type, name), _mirrors.hasSetter(type, name));
 
-  bool hasInstanceMethod(Type type, Symbol name) => _check(
-      'hasInstanceMethod',
-      [type, name],
-      _static.hasInstanceMethod(type, name),
+  bool hasInstanceMethod(Type type, Symbol name) => _check('hasInstanceMethod',
+      [type, name], _static.hasInstanceMethod(type, name),
       _mirrors.hasInstanceMethod(type, name));
 
-  bool hasStaticMethod(Type type, Symbol name) => _check(
-      'hasStaticMethod',
-      [type, name],
-      _static.hasStaticMethod(type, name),
-      _mirrors.hasStaticMethod(type, name));
+  bool hasStaticMethod(Type type, Symbol name) => _check('hasStaticMethod', [
+    type,
+    name
+  ], _static.hasStaticMethod(type, name), _mirrors.hasStaticMethod(type, name));
 
-  Declaration getDeclaration(Type type, Symbol name) => _check(
-      'getDeclaration',
-      [type, name],
-      _static.getDeclaration(type, name),
-      _mirrors.getDeclaration(type, name));
+  Declaration getDeclaration(Type type, Symbol name) => _check('getDeclaration',
+      [
+    type,
+    name
+  ], _static.getDeclaration(type, name), _mirrors.getDeclaration(type, name));
 
-  List<Declaration> query(Type type, QueryOptions options) => _check(
-      'query',
-      [type, options],
-      _static.query(type, options),
-      _mirrors.query(type, options));
+  List<Declaration> query(Type type, QueryOptions options) => _check('query', [
+    type,
+    options
+  ], _static.query(type, options), _mirrors.query(type, options));
 }
 
 /// Implements [SymbolConverterService] using a static configuration.
@@ -105,12 +106,11 @@ class _DebugSymbolConverterService implements SymbolConverterService {
       _static.nameToSymbol(name), _mirrors.nameToSymbol(name));
 }
 
-dynamic/*=X*/ _check/*<X>*/(String operation, List arguments,
-    dynamic/*=X*/ staticResult, mirrorResult) {
+_check(String operation, List arguments, staticResult, mirrorResult) {
   if (staticResult == mirrorResult) return staticResult;
   if (staticResult is List &&
       mirrorResult is List &&
-      compareLists(staticResult as List, mirrorResult, unordered: true)) {
+      compareLists(staticResult, mirrorResult, unordered: true)) {
     return staticResult;
   }
   print('warning: inconsistent result on $operation(${arguments.join(', ')})\n'

@@ -48,6 +48,7 @@ class InitializationCrawler {
   Queue<Function> run() {
     var librariesSeen = new Set<LibraryMirror>();
     var queue = new Queue<Function>();
+    var libraries = currentMirrorSystem().libraries;
 
     _readLibraryDeclarations(_rootLibrary, librariesSeen, queue);
     return queue;
@@ -150,6 +151,9 @@ class InitializationCrawler {
     });
     return declarationList;
   }
+
+  String _declarationName(DeclarationMirror declaration) =>
+      MirrorSystem.getName(declaration.qualifiedName);
 
   /// Reads annotations on a [DeclarationMirror] and adds them to [_initQueue]
   /// if they are [Initializer]s.

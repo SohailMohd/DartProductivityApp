@@ -14,7 +14,7 @@
   </head>
 
   <body>
-  <div class="container-fluid">
+<div class="container-fluid">
 <div class="row">
   <div class="col-xs-12">
     <h1 class="text-center">Productivity App</h1>
@@ -25,14 +25,46 @@
 
 <div class="row">
   <div class="col-sm-7">
-    <div id="searchMaps"> </div>
+    <div class="text-center">
+    <h3>Calculator</h3>
+    <input id="calcScreen" type="text"> </input>
+    <nav>
+      <ul class="pagination">
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">+</a></li>
+        <br>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">6</a></li>
+        <li><a href="#">-</a></li>
+        <br>
+        <li><a href="#">7</a></li>
+        <li><a href="#">8</a></li>
+        <li><a href="#">9</a></li>
+        <li><a href="#">=</a></li>
+      </ul>
 
-<!--    <button type="button" class="btn btn-info" id="jsonNotes">Check Notes</button>
-    <ul id='displayNotes'>
-    <paper-input label="Type something...">Hello WOrld</paper-input>
-    </ul>  -->
+    </nav>
+    </div>
+  </div>
+  <!--  <template is="dom-bind">
+      <paper-checkbox>Notifications</paper-checkbox>
+      <paper-dropdown-menu label="Favorite pizza">
+          <paper-menu class="dropdown-content">
+              <paper-item>Cheese</paper-item>
+              <paper-item>Pesto</paper-item>
+              <paper-item>Mushroom</paper-item>
+              <paper-item>Everything</paper-item>
+          </paper-menu>
+      </paper-dropdown-menu>
+      <paper-button raised>Click me</paper-button>
 
-  <!--  <div id="notesImgsBox" class="slideshow">
+      <paper-input on-keyup="onKeyUp" label="Enter text: "></paper-input>
+    </template> -->
+
+<!--    <div id="notesImgsBox" class="slideshow">
       <div class="slides">
         <ul>
           <li class="active">
@@ -54,7 +86,7 @@
         </div>
      </div>
    </div>
-  </div>
+ </div> -->
   <div class="col-sm-5">
     <div id="toDoListStyle">
     <h3>ToDo List</h3>
@@ -62,7 +94,7 @@
     <input id="addItem" type="text" placeholder="Add item to list <ENTER>"> </input>
     <button type="button" class="btn btn-warning" id="clearList" style="float:right">Delete All</button>
     <button type="button" class="btn btn-default" id="addItem" style="float:right">Add</button>
--->
+
     <div>
       <ul id="displayList">
 

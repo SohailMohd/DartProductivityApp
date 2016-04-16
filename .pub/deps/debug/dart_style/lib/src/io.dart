@@ -9,8 +9,8 @@ import 'dart:io';
 import 'package:path/path.dart' as p;
 
 import 'dart_formatter.dart';
-import 'formatter_exception.dart';
 import 'formatter_options.dart';
+import 'formatter_exception.dart';
 import 'source_code.dart';
 
 /// Runs the formatter on every .dart file in [path] (and its subdirectories),
@@ -22,8 +22,6 @@ bool processDirectory(FormatterOptions options, Directory directory) {
   options.reporter.showDirectory(directory.path);
 
   var success = true;
-  var shownHiddenPaths = new Set<String>();
-
   for (var entry in directory.listSync(
       recursive: true, followLinks: options.followLinks)) {
     var relative = p.relative(entry.path, from: directory.path);
@@ -36,22 +34,8 @@ bool processDirectory(FormatterOptions options, Directory directory) {
     if (entry is! File || !entry.path.endsWith(".dart")) continue;
 
     // If the path is in a subdirectory starting with ".", ignore it.
-    var parts = p.split(relative);
-    var hiddenIndex;
-    for (var i = 0; i < parts.length; i++) {
-      if (parts[i].startsWith(".")) {
-        hiddenIndex = i;
-        break;
-      }
-    }
-
-    if (hiddenIndex != null) {
-      // Since we'll hide everything inside the directory starting with ".",
-      // show the directory name once instead of once for each file.
-      var hiddenPath = p.joinAll(parts.take(hiddenIndex + 1));
-      if (shownHiddenPaths.add(hiddenPath)) {
-        options.reporter.showHiddenPath(hiddenPath);
-      }
+    if (p.split(relative).any((part) => part.startsWith("."))) {
+      options.reporter.showHiddenFile(relative);
       continue;
     }
 
@@ -67,20 +51,15 @@ bool processDirectory(FormatterOptions options, Directory directory) {
 bool processFile(FormatterOptions options, File file, {String label}) {
   if (label == null) label = file.path;
 
-  var formatter =
-      new DartFormatter(indent: options.indent, pageWidth: options.pageWidth);
+  var formatter = new DartFormatter(pageWidth: options.pageWidth);
   try {
     var source = new SourceCode(file.readAsStringSync(), uri: file.path);
-    options.reporter.beforeFile(file, label);
     var output = formatter.formatSource(source);
-    options.reporter
-        .afterFile(file, label, output, changed: source.text != output.text);
+    options.reporter.showFile(file, label, output,
+        changed: source.text != output.text);
     return true;
   } on FormatterException catch (err) {
-    var color = Platform.operatingSystem != "windows" &&
-        stdioType(stderr) == StdioType.TERMINAL;
-
-    stderr.writeln(err.message(color: color));
+    stderr.writeln(err.message());
   } catch (err, stack) {
     stderr.writeln('''Hit a bug in the formatter when formatting $label.
 Please report at: github.com/dart-lang/dart_style/issues

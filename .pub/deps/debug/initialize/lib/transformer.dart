@@ -24,17 +24,15 @@ export 'build/initializer_plugin.dart';
 /// a new file that bootstraps your application.
 Asset generateBootstrapFile(Resolver resolver, Transform transform,
     AssetId primaryAssetId, AssetId newEntryPointId,
-    {bool errorIfNotFound: true,
-    List<InitializerPlugin> plugins,
+    {bool errorIfNotFound: true, List<InitializerPlugin> plugins,
     bool appendDefaultPlugin: true}) {
   if (appendDefaultPlugin) {
     if (plugins == null) plugins = [];
     plugins.add(const DefaultInitializerPlugin());
   }
   return new _BootstrapFileBuilder(
-          resolver, transform, primaryAssetId, newEntryPointId, errorIfNotFound,
-          plugins: plugins)
-      .run();
+      resolver, transform, primaryAssetId, newEntryPointId, errorIfNotFound,
+      plugins: plugins).run();
 }
 
 /// Transformer which removes the mirror-based initialization logic and replaces
@@ -100,19 +98,18 @@ class InitializeTransformer extends Transformer {
       });
     });
   }
-
   // Finds the first (and only) dart script on an html page and returns the
   // [AssetId] that points to it
   AssetId _findMainScript(
       dom.Document document, AssetId entryPoint, Transform transform) {
-    var scripts = _getScripts(document);
+    var scripts = document.querySelectorAll('script[type="application/dart"]');
     if (scripts.length != 1) {
       transform.logger.error('Expected exactly one dart script in $entryPoint '
           'but found ${scripts.length}.');
       return null;
     }
 
-    var src = _getScriptAttribute(scripts[0]);
+    var src = scripts[0].attributes['src'];
     if (src == null) {
       // TODO(jakemac): Support inline scripts,
       transform.logger.error('Inline scripts are not supported at this time, '
@@ -128,51 +125,26 @@ class InitializeTransformer extends Transformer {
   // [entryPoint].
   void _replaceEntryWithBootstrap(Transform transform, dom.Document document,
       AssetId entryPoint, AssetId originalDartFile, AssetId newDartFile) {
-    var scripts = _getScripts(document)
+    var found = false;
+
+    var scripts = document
+        .querySelectorAll('script[type="application/dart"]')
         .where((script) {
-      var assetId = uriToAssetId(entryPoint, _getScriptAttribute(script),
+      var assetId = uriToAssetId(entryPoint, script.attributes['src'],
           transform.logger, script.sourceSpan);
       return assetId == originalDartFile;
     }).toList();
 
     if (scripts.length != 1) {
-      transform.logger
-          .error('Expected exactly one script pointing to $originalDartFile in '
-              '$entryPoint, but found ${scripts.length}.');
+      transform.logger.error(
+          'Expected exactly one script pointing to $originalDartFile in '
+          '$entryPoint, but found ${scripts.length}.');
       return;
     }
-    _setScriptAttribute(
-        scripts[0],
-        path.url
-            .relative(newDartFile.path, from: path.dirname(entryPoint.path)));
+    scripts[0].attributes['src'] = path.url.relative(newDartFile.path,
+        from: path.dirname(entryPoint.path));
     transform.addOutput(new Asset.fromString(entryPoint, document.outerHtml));
   }
-
-  String _getScriptAttribute(dom.Element element) {
-    switch (element.localName) {
-      case 'script':
-        return element.attributes['src'];
-      case 'link':
-        return element.attributes['href'];
-      default:
-        throw 'Unrecognized element $element';
-    }
-  }
-
-  void _setScriptAttribute(dom.Element element, String path) {
-    switch (element.localName) {
-      case 'script':
-        element.attributes['src'] = path;
-        break;
-      case 'link':
-        element.attributes['href'] = path;
-        break;
-    }
-  }
-
-  List<dom.Element> _getScripts(dom.Document document) =>
-      document.querySelectorAll(
-          'script[type="application/dart"], link[rel="x-dart-test"]');
 }
 
 // Class which builds a bootstrap file.
@@ -185,13 +157,11 @@ class _BootstrapFileBuilder {
 
   /// The resolved initialize library.
   LibraryElement _initializeLibrary;
-
   /// The resolved Initializer class from the initialize library.
   ClassElement _initializer;
 
   /// Queue for intialization annotations.
   final _initQueue = new Queue<InitializerData>();
-
   /// All the annotations we have seen for each element
   final _seenAnnotations = new Map<Element, Set<ElementAnnotation>>();
 
@@ -267,7 +237,7 @@ class _BootstrapFileBuilder {
     if (element.metadata.isEmpty) return found;
 
     var metaNodes;
-    var node = element.computeNode();
+    var node = element.node;
     if (node is SimpleIdentifier && node.parent is LibraryIdentifier) {
       metaNodes = node.parent.parent.metadata;
     } else if (node is ClassDeclaration || node is FunctionDeclaration) {
@@ -356,8 +326,8 @@ $initializersBuffer
       _logger.error("Can't import `${id}` from `${_newEntryPoint}`");
     } else if (path.url.split(id.path)[0] ==
         path.url.split(_newEntryPoint.path)[0]) {
-      var relativePath = path.url
-          .relative(id.path, from: path.url.dirname(_newEntryPoint.path));
+      var relativePath = path.url.relative(id.path,
+          from: path.url.dirname(_newEntryPoint.path));
       buffer.write("import '${relativePath}'");
     } else {
       _logger.error("Can't import `${id}` from `${_newEntryPoint}`");
@@ -439,9 +409,8 @@ $initializersBuffer
     }
 
     return (new List.from(library.imports)
-          ..addAll(library.exports)
-          ..sort((a, b) => a.nameOffset.compareTo(b.nameOffset)))
-        .map(getLibrary);
+      ..addAll(library.exports)
+      ..sort((a, b) => a.nameOffset.compareTo(b.nameOffset))).map(getLibrary);
   }
 }
 

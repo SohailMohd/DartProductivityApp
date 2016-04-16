@@ -161,10 +161,8 @@ class Recorder {
   /// find it or we reach [includeUpTo] or Object. Returns whether the
   /// declaration was found.  When a declaration is found, add also a symbol,
   /// getter, and setter if [includeAccessors] is true.
-  bool lookupMember(ClassElement type, String name,
-          {bool recursive: false,
-          bool includeAccessors: true,
-          ClassElement includeUpTo}) =>
+  bool lookupMember(ClassElement type, String name, {bool recursive: false,
+          bool includeAccessors: true, ClassElement includeUpTo}) =>
       _lookupMemberInternal(
           type, _typeFor(type), name, recursive, includeAccessors, includeUpTo);
 
@@ -255,14 +253,11 @@ class Recorder {
 
   /// Copy metadata associated with the declaration of [target].
   List<ConstExpression> _copyAnnotations(Element target) {
-    var node = target.computeNode();
+    var node = target.node;
     // [node] is the initialization expression, we walk up to get to the actual
     // member declaration where the metadata is attached to.
     while (node is! ClassMember) node = node.parent;
-    return (node as ClassMember)
-        .metadata
-        .map/*<ConstExpression>*/(_convertAnnotation)
-        .toList();
+    return node.metadata.map(_convertAnnotation).toList();
   }
 
   /// Converts annotations into [ConstExpression]s supported by the codegen
@@ -275,8 +270,8 @@ class Recorder {
             'named constructors are not implemented in smoke.codegen.recorder');
       }
 
-      var positionalArgs = <ConstExpression>[];
-      var namedArgs = <String, ConstExpression>{};
+      var positionalArgs = [];
+      var namedArgs = {};
       for (var arg in annotation.arguments.arguments) {
         if (arg is NamedExpression) {
           namedArgs[arg.name.label.name] = _convertExpression(arg.expression);
@@ -400,15 +395,10 @@ class QueryOptions {
   /// that match will be included.
   final NameMatcher matches;
 
-  const QueryOptions(
-      {this.includeFields: true,
-      this.includeProperties: true,
-      this.includeInherited: true,
-      this.includeUpTo: null,
-      this.excludeFinal: false,
-      this.includeMethods: false,
-      this.withAnnotations: null,
-      this.matches: null});
+  const QueryOptions({this.includeFields: true, this.includeProperties: true,
+      this.includeInherited: true, this.includeUpTo: null,
+      this.excludeFinal: false, this.includeMethods: false,
+      this.withAnnotations: null, this.matches: null});
 }
 
 /// Predicate that tells whether [name] should be included in query results.
